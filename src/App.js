@@ -1,15 +1,17 @@
 import logo from './logo.svg';
 import './App.css';
-import Home from './page/home/Home';
+import Home from './page/Main/home/Home';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import HeaderNav from './component/HeaderNav';
+
+import { RouterProvider } from 'react-router-dom';
+import router from './router/router';
 
 
 function App() {
   return (
     <div className="App">
-      <HeaderNav/>
-        <Home/>
+       <RouterProvider router={router} />
+    
     </div>
   );
 }
