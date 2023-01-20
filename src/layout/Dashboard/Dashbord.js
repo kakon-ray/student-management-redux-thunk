@@ -1,11 +1,12 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
-import HeaderNav from '../Main/HeaderNav';
+import Footer from '../Component/Footer';
+import HeaderNav from '../Component/HeaderNav';
 import Sidebar from './Sidebar';
 
 const Dashbord = () => {
     return (
-        <div>
+        <>
            
                 <div className='row'>
                     <HeaderNav/>
@@ -15,10 +16,14 @@ const Dashbord = () => {
                     <div className='col-lg-9'>
                     <Outlet/>
                     </div>
+
+                    <Footer/>
                 </div>
+
+
          
            
-        </div>
+        </>
     );
 };
 

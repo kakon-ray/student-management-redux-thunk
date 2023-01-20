@@ -22,7 +22,8 @@ const addProductData = (product) => {
             title: 'Successfylly add Product',
             text: 'One Item add',
             icon: 'success',
-            confirmButtonText: 'OK'
+            showConfirmButton: false,
+            timer: 1500
           })
         }
       };

@@ -1,13 +1,13 @@
 import React from 'react';
-import { postProduct } from '../../action/ProductAction';
 import Swal from 'sweetalert2'
-import { postCartList } from '../../action/CartListAction';
+import { deleteProduct } from '../../action/ProductAction';
 
-const addCartListData = (cartdata) => {
+
+const deleteProductData = (id) => {
     return async (dispatch, getState) => {
-        const res = await fetch("http://127.0.0.1:8000/api/add-cartlist", {
+        const res = await fetch("http://127.0.0.1:8000/api/delete-product", {
           method: "POST",
-          body: JSON.stringify(cartdata),
+          body: JSON.stringify(id),
           headers: {
             "Content-type": "application/json",
           },
@@ -16,17 +16,18 @@ const addCartListData = (cartdata) => {
     
         if (data == 1) {
           dispatch(
-            postCartList(cartdata)
+            deleteProduct(id.id)
           );
 
           Swal.fire({
-            title: 'Successfylly add Product to Cartlist',
+            title: 'Successfylly Delete Product',
             text: 'One Item add',
             icon: 'success',
-            confirmButtonText: 'OK'
+            showConfirmButton: false,
+            timer: 1500
           })
         }
       };
 };
 
-export default addCartListData;
+export default deleteProductData;

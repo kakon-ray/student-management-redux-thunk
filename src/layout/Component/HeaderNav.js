@@ -2,22 +2,18 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import getCartListData from '../../redux/thunk/action/getCartListData';
+import { getCartList } from '../../redux/action/CartListAction';
+
 
 
 const HeaderNav = () => {
 
-  const dispatch = useDispatch();
 
   const cartlist = useSelector(
     (state) => state.product.cart
   );
 
-  useEffect(() => {
-    dispatch(getCartListData())
-  }, [dispatch]);
 
- 
 
     return (
         <header>
@@ -63,7 +59,7 @@ const HeaderNav = () => {
       
       <Link className="text-reset me-3" to="cartlist">
         <i className="fas fa-shopping-cart"></i>
-        <span className="badge rounded-pill badge-notification bg-danger">{cartlist.length}</span>
+        <span className="badge rounded-pill badge-notification bg-danger">{cartlist?.length}</span>
       </Link>
 
       
@@ -104,13 +100,10 @@ const HeaderNav = () => {
           aria-labelledby="navbarDropdownMenuAvatar"
         >
           <li>
-              <Link className="dropdown-item" to="add-product">Dashboard</Link>
+              <Link className="dropdown-item" to="/dasboard/add-product">Dashboard</Link>
           </li>
           <li>
-              <Link className="dropdown-item" to="manage-product">Manage Product  </Link>
-          </li>
-          <li>
-              <Link className="dropdown-item" to="cartlist">Cartlist</Link>
+              <Link className="dropdown-item" to="/dasboard/manage-product">Manage Product  </Link>
           </li>
           <li>
             <a className="dropdown-item" href="#">Logout</a>

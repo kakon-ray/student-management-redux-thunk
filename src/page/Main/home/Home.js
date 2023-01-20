@@ -1,10 +1,10 @@
 /* eslint-disable jsx-a11y/alt-text */
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import './Home.css'
-import img from '../../../asset/img/1.png'
 import { useDispatch, useSelector } from "react-redux";
-import getProductData from "../../../redux/thunk/action/getProductData"
-import addCartListData from "../../../redux/thunk/action/addCartListData";
+import { postCartList } from "../../../redux/action/CartListAction";
+import getProductData from "../../../redux/thunk/action/getProductData";
+
 const Home = () => {
 const dispatch = useDispatch();
 
@@ -18,14 +18,8 @@ const dispatch = useDispatch();
 
 
   const addToCartList = (product) => {
-    const cartdata = {
-      productName:product.productName,
-      price:product.price,
-      quantity:product.quantity,
-      image:product.image,
-      productDetails:product.productDetails
-    }
-     dispatch(addCartListData(cartdata))
+
+     dispatch(postCartList(product))
   }
 
     return (
