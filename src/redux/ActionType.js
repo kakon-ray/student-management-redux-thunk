@@ -1,6 +1,10 @@
-export const ADD_CONTENT = 'ADD_CONTENT'
+export const ADD_PRODUCT = 'ADD_PRODUCT'
 
-export const GET_CONTENT = 'GET_CONTENT'
+export const ADD_CARTLIST = 'ADD_CARTLIST'
+
+export const GET_CARTLIST = 'GET_CARTLIST'
+
+export const GET_PRODUCT = 'GET_PRODUCT'
 
 export const UPDATE_CONTENT = 'UPDATE_CONTENT'
 

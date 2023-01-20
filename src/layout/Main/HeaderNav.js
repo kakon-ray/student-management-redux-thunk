@@ -1,17 +1,33 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import getCartListData from '../../redux/thunk/action/getCartListData';
+
 
 const HeaderNav = () => {
+
+  const dispatch = useDispatch();
+
+  const cartlist = useSelector(
+    (state) => state.product.cart
+  );
+
+  useEffect(() => {
+    dispatch(getCartListData())
+  }, [dispatch]);
+
+ 
+
     return (
         <header>
                 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav className="navbar navbar-expand-lg navbar-light bg-light">
   
-  <div class="container">
+  <div className="container">
     
     <button
-      class="navbar-toggler"
+      className="navbar-toggler"
       type="button"
       data-mdb-toggle="collapse"
       data-mdb-target="#navbarSupportedContent"
@@ -19,25 +35,23 @@ const HeaderNav = () => {
       aria-expanded="false"
       aria-label="Toggle navigation"
     >
-      <i class="fas fa-bars"></i>
+      <i className="fas fa-bars"></i>
     </button>
 
     
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <div className="collapse navbar-collapse" id="navbarSupportedContent">
       
-      <a class="navbar-brand mt-2 mt-lg-0" href="#">
+      <a className="navbar-brand mt-2 mt-lg-0" href="#">
         Student
       </a>
       
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-        <Link class="nav-link" to={`/`}>Home</Link>
+      <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+        <li className="nav-item">
+        <Link className="nav-link" to={`/`}>Home</Link>
         </li>
-        <li class="nav-item">
-        <Link class="nav-link" to={`/addstudent`}>Add Student</Link>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Contact</a>
+     
+        <li className="nav-item">
+          <a className="nav-link" href="#">Contact</a>
         </li>
       </ul>
       
@@ -45,44 +59,32 @@ const HeaderNav = () => {
     
 
     
-    <div class="d-flex align-items-center">
+    <div className="d-flex align-items-center">
       
-      <a class="text-reset me-3" href="#">
-        <i class="fas fa-shopping-cart"></i>
-      </a>
+      <Link className="text-reset me-3" to="cartlist">
+        <i className="fas fa-shopping-cart"></i>
+        <span className="badge rounded-pill badge-notification bg-danger">{cartlist.length}</span>
+      </Link>
 
       
-      <div class="dropdown">
+      <div className="dropdown">
         <a
-          class="text-reset me-3 dropdown-toggle hidden-arrow"
+          className="text-reset me-3 dropdown-toggle hidden-arrow"
           href="#"
           id="navbarDropdownMenuLink"
           role="button"
           data-mdb-toggle="dropdown"
           aria-expanded="false"
         >
-          <i class="fas fa-bell"></i>
-          <span class="badge rounded-pill badge-notification bg-danger">1</span>
+          <i className="fas fa-bell"></i>
+          <span className="badge rounded-pill badge-notification bg-danger">1</span>
         </a>
-        <ul
-          class="dropdown-menu dropdown-menu-end"
-          aria-labelledby="navbarDropdownMenuLink"
-        >
-          <li>
-            <a class="dropdown-item" href="#">Some news</a>
-          </li>
-          <li>
-            <a class="dropdown-item" href="#">Another news</a>
-          </li>
-          <li>
-            <a class="dropdown-item" href="#">Something else here</a>
-          </li>
-        </ul>
+      
       </div>
       
-      <div class="dropdown">
+      <div className="dropdown">
         <a
-          class="dropdown-toggle d-flex align-items-center hidden-arrow"
+          className="dropdown-toggle d-flex align-items-center hidden-arrow"
           href="#"
           id="navbarDropdownMenuAvatar"
           role="button"
@@ -91,24 +93,27 @@ const HeaderNav = () => {
         >
           <img
             src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp"
-            class="rounded-circle"
+            className="rounded-circle"
             height="25"
             alt="Black and White Portrait of a Man"
             loading="lazy"
           />
         </a>
         <ul
-          class="dropdown-menu dropdown-menu-end"
+          className="dropdown-menu dropdown-menu-end"
           aria-labelledby="navbarDropdownMenuAvatar"
         >
           <li>
-            <a class="dropdown-item" href="#">My profile</a>
+              <Link className="dropdown-item" to="add-product">Dashboard</Link>
           </li>
           <li>
-            <a class="dropdown-item" href="#">Settings</a>
+              <Link className="dropdown-item" to="manage-product">Manage Product  </Link>
           </li>
           <li>
-            <a class="dropdown-item" href="#">Logout</a>
+              <Link className="dropdown-item" to="cartlist">Cartlist</Link>
+          </li>
+          <li>
+            <a className="dropdown-item" href="#">Logout</a>
           </li>
         </ul>
       </div>

@@ -1,38 +1,58 @@
-import React from 'react';
-import AddStudent from '../addstudent/AddStudent';
-
+/* eslint-disable jsx-a11y/alt-text */
+import React, { useEffect, useState } from "react";
 import './Home.css'
-
+import img from '../../../asset/img/1.png'
+import { useDispatch, useSelector } from "react-redux";
+import getProductData from "../../../redux/thunk/action/getProductData"
+import addCartListData from "../../../redux/thunk/action/addCartListData";
 const Home = () => {
+const dispatch = useDispatch();
+
+  const allProduct = useSelector(
+    (state) => state.product.product
+  );
+
+  useEffect(() => {
+    dispatch(getProductData())
+  }, [dispatch]);
+
+
+  const addToCartList = (product) => {
+    const cartdata = {
+      productName:product.productName,
+      price:product.price,
+      quantity:product.quantity,
+      image:product.image,
+      productDetails:product.productDetails
+    }
+     dispatch(addCartListData(cartdata))
+  }
+
     return (
-       <div className='container pt-4'>
-           <div className='row'>
-           <table class="table table-striped table-hover table-bordered text-center">
-        <thead>
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">First</th>
-            <th scope="col">Last</th>
-            <th scope="col">Handle</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
-          </tr>
-          <tr>
-            <th scope="row">2</th>
-            <td>Jacob</td>
-            <td>Thornton</td>
-            <td>@fat</td>
-          </tr>
+       <div className='container my-5 '>
+          <div className='row'>
+            {
+              allProduct.map((product)=>{
+                  return(
+                  <div className='col-lg-3' key={product.id}>
+                    <div className='card'>
+                       <div className='card-body'>
+                          <img src={product.image} className="img-fluid"/>
+                          <div className='card-body-header'>
+                            <h5>{product.productName}</h5>
+                            <h5>{product.price}$</h5>
+                          </div>
+                          <p>{product.productDetails}</p>
+                          <button type="button" class="btn btn-success w-100" onClick={()=>addToCartList(product)}><i class="fas fa-cart-plus m-2"></i>Add To Cart</button>
+                       </div>
+                    </div>
+                 </div>
+                  )
+              })
+            }
          
-        </tbody>
-      </table>
-           </div>
+       
+          </div>
        </div>
     );
 };
