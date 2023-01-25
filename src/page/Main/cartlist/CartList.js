@@ -34,7 +34,7 @@ const dispatch = useDispatch();
     return (
         <div className='container pt-4'>
         <div className='row table-responsive'>
-        <table class="table table-striped table-hover table-bordered text-center">
+        <table className="table table-striped table-hover table-bordered text-center">
      <thead>
        <tr>
          <th scope="col">ID</th>
@@ -62,7 +62,7 @@ const dispatch = useDispatch();
             </td>
             <td>{item.productDetails}</td>
             <td>
-            <button type="button" class="btn btn-danger" onClick={()=>delete_Cart(item)}>Delete</button>
+            <button type="button" className="btn btn-danger" onClick={()=>delete_Cart(item)}>Delete</button>
             </td>
           </tr>
           )

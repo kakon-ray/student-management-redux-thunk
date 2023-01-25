@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
@@ -32,10 +33,11 @@ const dispatch = useDispatch()
     
   }
 
+
     return (
         <div className='container pt-4'>
            <div className='row table-responsive'>
-        <table class="table table-striped table-hover table-bordered text-center">
+        <table className="table table-striped table-hover table-bordered text-center">
      <thead>
        <tr>
          <th scope="col">ID</th>
@@ -63,7 +65,11 @@ const dispatch = useDispatch()
             </td>
             <td>{item.productDetails}</td>
             <td>
-            <button type="button" class="btn btn-danger" onClick={()=>delete_product(item)}>Delete</button>
+             <div className='d-flex gap-2'>
+                <button type="button" className="btn btn-danger" onClick={()=>delete_product(item)}>Delete</button>
+                <a href={`update-product/`+item.id} type="button" className="btn btn-danger">Edit</a>
+             </div>
+
             </td>
           </tr>
           )

@@ -11,6 +11,10 @@ import CartList from "../page/Main/cartlist/CartList";
 import ManageProduct from "../page/Dashboard/ManageProduct";
 
 import Home from "../page/Main/home/Home";
+import UpdateProduct from "../page/Dashboard/UpdateProduct";
+import Registation from "../page/Main/auth/Registation";
+import Login from "../page/Main/auth/Login";
+import RequireAuth from "../component/RequireAuth";
 
 
 
@@ -22,6 +26,14 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <Home/>,
+      },
+      {
+        path: "login",
+        element: <Login/>,
+      },
+      {
+        path: "registation",
+        element: <Registation/>,
       },
       {
         path: "cartlist",
@@ -36,17 +48,19 @@ const router = createBrowserRouter([
     path: "/dasboard",
     element: <Dashbord/>,
     children: [
-      // {
-      //   path: "/dasboard",
-      //   element: <DashboardPage/>,
-      // },
+    
       {
         path: "add-product",
-        element: <AddProduct/>,
+        element: <RequireAuth><AddProduct/></RequireAuth>,
       },
       {
         path: "manage-product",
         element: <ManageProduct/>,
+      },
+
+      {
+        path: "update-product/:id",
+        element: <UpdateProduct/>,
       },
   
       

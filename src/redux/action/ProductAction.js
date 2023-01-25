@@ -1,4 +1,4 @@
-import { GET_PRODUCT, ADD_PRODUCT,DELETE_PORDUCT} from "../ActionType"
+import { GET_PRODUCT, ADD_PRODUCT,DELETE_PORDUCT,UPDATE_PORDUCT} from "../ActionType"
 
 
 export const postProduct = (data) => {
@@ -16,6 +16,12 @@ export const getProduct = (data) => {
 export const deleteProduct = (data) => {
     return {
         type: DELETE_PORDUCT,
+        payload: data
+    }
+}
+export const updateProduct = (data) => {
+    return {
+        type: UPDATE_PORDUCT,
         payload: data
     }
 }

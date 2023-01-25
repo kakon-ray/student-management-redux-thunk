@@ -1,5 +1,5 @@
 
-import { GET_PRODUCT, ADD_PRODUCT, ADD_CARTLIST, GET_CARTLIST,DELETE_CARTLIST,DELETE_PORDUCT} from "../ActionType"
+import { GET_PRODUCT, ADD_PRODUCT, ADD_CARTLIST, GET_CARTLIST,DELETE_CARTLIST,DELETE_PORDUCT,UPDATE_PORDUCT} from "../ActionType"
 
 const initialState = {
     cart:[],
@@ -10,12 +10,13 @@ const initialState = {
 
 const productReducer = (state=initialState,action) => {
     const selectedProduct = state.cart.filter(item => item.id === action.payload.id)
-    
-    console.log(selectedProduct)
-  
+    const updateProduct = state.product.filter(item => item.id != action.payload.id)
+   
+   
          switch(action.type){
 
             case GET_PRODUCT:
+               
                 return{
                     ...state,
                     product:action.payload
@@ -64,6 +65,15 @@ const productReducer = (state=initialState,action) => {
                         (item) => item.id !== action.payload
                       ),
                 }
+
+            case UPDATE_PORDUCT:
+                return{
+                    ...state,
+                    product:[...updateProduct,action.payload]
+                    
+                }
+
+                
 
             default:
                 return state
