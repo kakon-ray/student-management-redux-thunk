@@ -1,13 +1,16 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useEffect } from 'react';
+import { useSignOut } from 'react-firebase-hooks/auth';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import Swal from 'sweetalert2';
+import auth from '../../firebase.init';
 import { getCartList } from '../../redux/action/CartListAction';
 
 
 
 const HeaderNav = () => {
-
+  const [signOut, loading, error] = useSignOut(auth);
 
   const cartlist = useSelector(
     (state) => state.product.cart
@@ -106,7 +109,17 @@ const HeaderNav = () => {
               <Link className="dropdown-item" to="/dasboard/manage-product">Manage Product  </Link>
           </li>
           <li>
-            <a className="dropdown-item" href="#">Logout</a>
+            <a type='button' className="dropdown-item" onClick={async () => {
+          const success = await signOut();
+          if (success) {
+            Swal.fire({
+              title: 'Logout Completed',
+              icon: 'success',
+              showConfirmButton: false,
+              timer: 1500
+            })
+          }
+        }}>Logout</a>
           </li>
         </ul>
       </div>

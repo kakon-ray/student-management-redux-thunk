@@ -1,26 +1,34 @@
 /* eslint-disable react/style-prop-object */
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
 import { deleteCartList } from '../../../redux/action/CartListAction';
+import getCartListData from '../../../redux/thunk/action/getCartListData';
+
 
 import './CartList.css'
 const CartList = () => {
   
 const dispatch = useDispatch();
 
+useEffect(() => {
+  dispatch(getCartListData())
+}, [dispatch]);
+
+
   const cartlist = useSelector(
     (state) => state.product.cart
   );
 
-
+  // let cartlist = JSON.parse(localStorage.getItem('cart'));
+  // console.log(cartlist)
   const delete_Cart = (item) => {
    
     Swal.fire({
       title: 'Do you want to Delete this Item',
       showDenyButton: true,
       showCancelButton: false,
-      confirmButtonText: 'Delete',
+      confirmButtonText: 'Yes',
       denyButtonText: `No`,
     }).then((result) => {
       /* Read more about isConfirmed, isDenied below */
@@ -29,6 +37,15 @@ const dispatch = useDispatch();
       } 
     })
    
+  }
+
+  const updateQuantity = (quantity,id) => {
+    let cartlist = JSON.parse(localStorage.getItem('cart'));
+    cartlist.map((item) => {
+      return item.id === id? item.quantity=quantity : item;
+  })
+
+  localStorage.setItem('cart', JSON.stringify(cartlist));
   }
 
     return (
@@ -55,7 +72,7 @@ const dispatch = useDispatch();
             <td>{item.productName}</td>
             <td>{item.price}</td>
             <td>
-              <input type='number' defaultValue={item.quantity} className="w-25"></input>
+              <input type='number' min='1' onChange={(e)=>updateQuantity(e.target.value,item.id)} defaultValue={item.quantity} className="w-25"></input>
             </td>
             <td>
               <img src={item.image} alt="Cart" className="cart-img"></img>

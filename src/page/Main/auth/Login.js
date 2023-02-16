@@ -1,38 +1,43 @@
+
 import React from 'react';
 import { Button, Form } from 'react-bootstrap';
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import Swal from 'sweetalert2';
 import axios from 'axios'
-import {useNavigate} from 'react-router-dom';
+import {useLocation, useNavigate} from 'react-router-dom';
+import { useAuthState, useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
+import auth from '../../../firebase.init';
 
 const Login = () => {
   const { register, handleSubmit, watch, formState: { errors } } = useForm();
 
   const navigate = useNavigate();
+  let location = useLocation();
+  const [
+    signInWithEmailAndPassword,
+    user,
+    loading,
+    error,
+  ] = useSignInWithEmailAndPassword(auth);
+
+  const [currentuser] = useAuthState(auth);
+  let from = location.state?.from?.pathname || "/";
 
   const  onSubmit  =  async (info) => {
-    
+    const email = info.email;
+    const password = info.password;
+  
     axios.post('http://127.0.0.1:8000/api/login', {
-      email:info.email,
-      password:info.password,
+      email:email,
+      password:password,
     })
     .then(function (response) {
-      if(response.statusText === 'OK' && response.status === 200 && response.data === 1){         
-          Swal.fire({
-            title: 'Login Completed',
-            showDenyButton: true,
-            showCancelButton: false,
-            confirmButtonText: 'Go to Home Page',
-           
-          }).then((result) => {
-            /* Read more about isConfirmed, isDenied below */
-            if (result.isConfirmed) {
-              navigate('/');
-            } 
-          })
-        console.log(response);
-      }
+      console.log(response)
+      if(response.data === 1){      
+        signInWithEmailAndPassword(email, password)
+        navigate(from, { replace: true });
+    }
  
     })
     .catch(function (error) {
@@ -42,6 +47,17 @@ const Login = () => {
     
      
   };
+
+  // if (currentuser) {
+  //   Swal.fire({
+  //     icon: "success",
+  //     title: "Login Successed",
+  //     text: "Welcome",
+  //   });
+  //   setTimeout(() => {
+  //     navigate(from, { replace: true });
+  //   }, 1000);
+  // }
 
     return (
         <div className='container'>

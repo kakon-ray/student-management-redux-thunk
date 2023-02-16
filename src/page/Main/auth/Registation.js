@@ -4,7 +4,9 @@ import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import Swal from 'sweetalert2';
 import axios from 'axios'
-import {useNavigate} from 'react-router-dom';
+import {useLocation, useNavigate} from 'react-router-dom';
+import { useAuthState, useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth';
+import auth from '../../../firebase.init';
 
 const Registation = () => {
   const { register, handleSubmit, watch, formState: { errors } } = useForm();
@@ -12,9 +14,21 @@ const Registation = () => {
   const dispatch = useDispatch();
   
   const navigate = useNavigate();
+  const [
+    createUserWithEmailAndPassword,
+    user,
+    loading,
+    error,
+  ] = useCreateUserWithEmailAndPassword(auth, { sendEmailVerification: true });
+
+  const [currentuser] = useAuthState(auth);
+  let location = useLocation();
+  let from = location.state?.from?.pathname || "/";
 
 
   const  onSubmit  =  async (info) => {
+    const email = info.email;
+    const password = info.password;
 
     if(info.password !== info.confirmpassword){
         Swal.fire({
@@ -27,27 +41,28 @@ const Registation = () => {
 
           return 0
     }
+
+    if(password.length < 8){
+      Swal.fire({
+        title: 'Password Length Minmum 8 char',
+        text: 'Please Correct',
+        icon: 'error',
+        showConfirmButton: false,
+        timer: 1500
+      })
+
+      return 0
+    }
     
     axios.post('http://127.0.0.1:8000/api/registation', {
       name:info.name,
-      email:info.email,
-      password:info.password,
+      email:email,
+      password:password,
     })
     .then(function (response) {
-      if(response.statusText === 'OK' && response.status === 200 && response.data === 1){         
-          Swal.fire({
-            title: 'Registation Completed',
-            showDenyButton: true,
-            showCancelButton: false,
-            confirmButtonText: 'Go to Login Page',
-           
-          }).then((result) => {
-            /* Read more about isConfirmed, isDenied below */
-            if (result.isConfirmed) {
-              navigate('/login');
-            } 
-          })
-        console.log(response);
+      if(response.statusText === 'OK' && response.status === 200 && response.data === 1){ 
+        createUserWithEmailAndPassword(email, password)        
+        navigate('/login');
       }
  
     })
@@ -58,6 +73,18 @@ const Registation = () => {
     
      
   };
+
+ 
+  if (currentuser) {
+    Swal.fire({
+      icon: "success",
+      title: "Registation Successed",
+      text: "Welcome",
+    });
+    setTimeout(() => {
+      navigate(from, { replace: true });
+    }, 1000);
+  }
 
     return (
         <div className='container'>

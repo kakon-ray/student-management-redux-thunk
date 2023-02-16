@@ -1,20 +1,25 @@
+import axios from "axios";
 import React from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
 import { Navigate, useLocation } from "react-router-dom";
-import { useAuth } from "../context/AuthProvider";
+import auth from "../firebase.init";
+
 
 
 const RequireAuth = ({ children }) => {
   let location = useLocation();
-  const {user, loading, error} = useAuth();
+  const [user, loading, error] = useAuthState(auth);
+
 
   if (loading) {
     return <h1>Loading...</h1>;
   }
 
-console.log(user,loading,error)
 
-
-  if (!user.email) {
+  if (!user) {
+    return <Navigate to="/login" state={{ from: location }} replace />;
+  }
+  if (user && user?.emailVerified == false) {
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
 

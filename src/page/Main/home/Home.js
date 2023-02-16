@@ -4,24 +4,31 @@ import './Home.css'
 import { useDispatch, useSelector } from "react-redux";
 import { postCartList } from "../../../redux/action/CartListAction";
 import getProductData from "../../../redux/thunk/action/getProductData";
-import { useAuth } from "../../../context/AuthProvider";
+import { useAuthState } from "react-firebase-hooks/auth";
+import auth from "../../../firebase.init";
 
 const Home = () => {
 const dispatch = useDispatch();
+
+
+useEffect(() => {
+  dispatch(getProductData())
+}, [dispatch]);
 
   const allProduct = useSelector(
     (state) => state.product.product
   );
 
-  useEffect(() => {
-    dispatch(getProductData())
-  }, [dispatch]);
+
 
 
   const addToCartList = (product) => {
 
      dispatch(postCartList(product))
   }
+
+
+
 
 
 

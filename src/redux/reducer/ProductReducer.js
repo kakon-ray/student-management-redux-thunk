@@ -44,6 +44,7 @@ const productReducer = (state=initialState,action) => {
 
                 }
                 else{
+                    localStorage.setItem('cart', JSON.stringify([...state.cart,{...action.payload,quantity:1}]));
                     return{
                         ...state,
                         cart:[...state.cart,{...action.payload,quantity:1}]
@@ -52,6 +53,9 @@ const productReducer = (state=initialState,action) => {
                
 
             case DELETE_CARTLIST:
+                const newCart = state.cart.filter(
+                    (item) => item.id !== action.payload);
+            localStorage.setItem('cart', JSON.stringify(newCart));
                 return{
                     ...state,
                     cart:state.cart.filter(

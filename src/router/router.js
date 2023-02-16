@@ -55,12 +55,12 @@ const router = createBrowserRouter([
       },
       {
         path: "manage-product",
-        element: <ManageProduct/>,
+        element: <RequireAuth><ManageProduct/></RequireAuth>,
       },
 
       {
         path: "update-product/:id",
-        element: <UpdateProduct/>,
+        element: <RequireAuth><UpdateProduct/></RequireAuth>,
       },
   
       
