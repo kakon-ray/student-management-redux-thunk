@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import Swal from 'sweetalert2';
 import axios from 'axios'
-import {useLocation, useNavigate} from 'react-router-dom';
+import {Link, useLocation, useNavigate} from 'react-router-dom';
 import { useAuthState, useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import auth from '../../../firebase.init';
 
@@ -112,10 +112,17 @@ const Registation = () => {
       </Form.Group>
      
       <Button variant="primary" type="submit">
-        Submit
+        Registation
       </Button>
 </Form>
+<p className="pt-3">
+            Already have a account?{" "}
+            <Link to="/login" style={{ textDecoration: "none" }}>
+              <span style={{ cursor: "pointer", color: "#f79837" }}>Login</span>
+            </Link>
+          </p>
         </div>
+      
               </div>
            </div>
         </div>

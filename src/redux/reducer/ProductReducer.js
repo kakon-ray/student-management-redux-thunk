@@ -1,5 +1,5 @@
 
-import { GET_PRODUCT, ADD_PRODUCT, ADD_CARTLIST, GET_CARTLIST,DELETE_CARTLIST,DELETE_PORDUCT,UPDATE_PORDUCT} from "../ActionType"
+import { GET_PRODUCT, ADD_PRODUCT, ADD_CARTLIST,UPDATE_QUANTITY, GET_CARTLIST,DELETE_CARTLIST,DELETE_PORDUCT,UPDATE_PORDUCT} from "../ActionType"
 
 const initialState = {
     cart:[],
@@ -49,6 +49,19 @@ const productReducer = (state=initialState,action) => {
                         ...state,
                         cart:[...state.cart,{...action.payload,quantity:1}]
                     }
+                }
+            case UPDATE_QUANTITY:
+                const cartlist = state.cart.map(item =>
+                    item.id === action.payload.id
+                      ? { ...item, quantity: action.payload.quantity }
+                      : item
+                  );
+             
+                localStorage.setItem('cart', JSON.stringify(cartlist));
+                return{
+                  
+                    ...state,
+                    cart:[...cartlist]
                 }
                
 
