@@ -1,8 +1,9 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
 import { Link } from 'react-router-dom';
+import CustomLink from '../../component/CustomLink';
 import './Dashboard.css'
-
+import { NavLink } from 'react-router-dom';
 
 const Sidebar = () => {
   
@@ -11,20 +12,22 @@ const Sidebar = () => {
           <nav id="sidebarMenu" className="card collapse d-lg-block sidebar collapse bg-white">
     <div className="position-sticky">
       <div className="list-group list-group-flush mx-3 mt-4">
-        <Link
+        <NavLink
           to="add-product"
-          className="list-group-item list-group-item-action py-2 ripple active"
+          activeClassName="active"
+          className="list-group-item list-group-item-action py-2 ripple"
           aria-current="true"
         >
           <i className="fas fa-tachometer-alt fa-fw me-3"></i><span>Add Product</span>
-        </Link>
-        <Link
+        </NavLink>
+        <NavLink
           to="manage-product"
+          activeClassName="active"
           className="list-group-item list-group-item-action py-2 ripple"
           aria-current="true"
         >
           <i className="fas fa-tachometer-alt fa-fw me-3"></i><span>Manage Product</span>
-        </Link>
+        </NavLink>
 
      
         <a href="#" className="list-group-item list-group-item-action py-2 ripple"

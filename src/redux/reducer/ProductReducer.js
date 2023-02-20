@@ -1,4 +1,5 @@
 
+import Swal from "sweetalert2"
 import { GET_PRODUCT, ADD_PRODUCT, ADD_CARTLIST,UPDATE_QUANTITY, GET_CARTLIST,DELETE_CARTLIST,DELETE_PORDUCT,UPDATE_PORDUCT} from "../ActionType"
 
 const initialState = {
@@ -37,6 +38,14 @@ const productReducer = (state=initialState,action) => {
 
             case ADD_CARTLIST:
                 if(selectedProduct.length){
+                    Swal.fire({
+                        position: 'top-center',
+                        icon: 'error',
+                        title: 'Already added to Cart',
+                        showConfirmButton: false,
+                        timer: 1500
+                      })
+                   
                     return{
                         ...state,
                         cart:[...state.cart]
@@ -45,6 +54,13 @@ const productReducer = (state=initialState,action) => {
                 }
                 else{
                     localStorage.setItem('cart', JSON.stringify([...state.cart,{...action.payload,quantity:1}]));
+                    Swal.fire({
+                        position: 'top-center',
+                        icon: 'success',
+                        title: 'This product has Successfully added',
+                        showConfirmButton: false,
+                        timer: 1500
+                      })
                     return{
                         ...state,
                         cart:[...state.cart,{...action.payload,quantity:1}]

@@ -15,6 +15,7 @@ import UpdateProduct from "../page/Dashboard/UpdateProduct";
 import Registation from "../page/Main/auth/Registation";
 import Login from "../page/Main/auth/Login";
 import RequireAuth from "../component/RequireAuth";
+import ProductDetails from "../page/Main/productDetals/ProductDetails";
 
 
 
@@ -39,6 +40,11 @@ const router = createBrowserRouter([
         path: "cartlist",
         element: <CartList/>,
       },
+
+      {
+        path: "product-details/:id",
+        element: <RequireAuth><ProductDetails/></RequireAuth>,
+      },
       
       
     ],
@@ -62,6 +68,8 @@ const router = createBrowserRouter([
         path: "update-product/:id",
         element: <RequireAuth><UpdateProduct/></RequireAuth>,
       },
+
+     
   
       
     ],

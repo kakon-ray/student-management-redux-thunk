@@ -1,0 +1,18 @@
+#product-details {
+    font-family: "Poppins", sans-serif;
+  }
+  #product-details p {
+    font-size: 16px;
+  }
+  
+  .product-details-wishlistz:hover {
+    color: #f79837;
+    cursor: pointer;
+  }
+  .product-details-wishlistz {
+    transition: 0.3s ease-in-out;
+    -webkit-transition: 0.3s ease-in-out;
+    -moz-transition: 0.3s ease-in-out;
+    -ms-transition: 0.3s ease-in-out;
+    -o-transition: 0.3s ease-in-out;
+  }
